@@ -1,0 +1,2854 @@
+<div id="appendix-cluster-result-tables" class="section level2">
+<h2>Appendix: Cluster Result Tables</h2>
+<details><summary><code><span style="color: grey;">View code</span></code></summary>
+<pre class="r"><code>format_columns &lt;- function(table, cols, ...){
+  for(col in cols){
+    table &lt;- table %&gt;% 
+      kableExtra::column_spec(column=col, ...)
+  }
+  return(table)
+}
+library(knitr)
+library(kableExtra)
+get_table_for_office &lt;- function(plot_office){
+  overall_df &lt;- cat_df %&gt;%
+    group_by() %&gt;%
+    filter(office == plot_office) %&gt;% 
+    group_by(office, candidate_name) %&gt;% 
+    summarise(votes = sum(votes)) %&gt;% 
+    group_by() %&gt;% 
+    mutate(
+      cat=&quot;Overall&quot;, 
+      pvote = votes/sum(votes), 
+      cat_rank=rank(desc(votes), ties.method = &quot;first&quot;)
+    )
+  
+  table &lt;- kable(
+    cat_df %&gt;% 
+      group_by() %&gt;%
+      filter(office == plot_office) %&gt;%
+      bind_rows(overall_df) %&gt;%
+      mutate(
+        cat=factor(cat, levels=c(&quot;Overall&quot;, names(cat_colors))),
+        votes=paste0(scales::comma(votes), &quot; (&quot;, round(100 * pvote),&quot;%)&quot;)
+      ) %&gt;%
+      select(candidate_name, cat, votes, cat_rank) %&gt;%
+      rename(
+        &quot;Rank in Cluster&quot; = cat_rank,
+        &quot;Candidate&quot; = candidate_name
+      ) %&gt;%
+      gather(&quot;key&quot;, &quot;value&quot;, Candidate, votes) %&gt;%
+      mutate(key = format_name(key), blank=&quot;     &quot;) %&gt;%
+      unite(key, cat, key, sep=&quot;: &quot;) %&gt;%
+      spread(key, value) %&gt;%
+      select(
+        &quot;Rank in Cluster&quot;, 
+        blank,
+        starts_with(&quot;Overall&quot;),
+        starts_with(&quot;Black&quot;), 
+        starts_with(&quot;Wealthy&quot;), 
+        starts_with(&quot;White&quot;), 
+        starts_with(&quot;Hispanic&quot;)
+      )
+    ,
+    caption=sprintf(&quot;Cluster Results for %s&quot;, plot_office),
+    align=&#39;l&#39;,
+    col.names=c(&quot;Rank&quot;,&quot;&quot;, rep(c(&quot;Candidate&quot;, &quot;Votes&quot;), times=5)),
+    padding = &quot;4in&quot;
+  ) %&gt;%
+    column_spec(2, width = &quot;1em&quot;) %&gt;% 
+    add_header_above(
+      c(&quot; &quot; = 2, &quot;Overall&quot; = 2, &quot;Black Voters&quot; = 2, &quot;Wealthy Progressives&quot; = 2,
+        &quot;White Moderates&quot; = 2, &quot;Hispanic North Philly&quot; = 2)
+    )
+  
+  return(table)
+}
+
+get_table_for_office(&quot;Commissioner&quot;)</code></pre>
+</details>
+<table>
+<caption>
+Cluster Results for Commissioner
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="2">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Overall
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Black Voters
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Wealthy Progressives
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+White Moderates
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Hispanic North Philly
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Rank
+</th>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Omar Sabir
+</td>
+<td style="text-align:left;">
+71,303 (24%)
+</td>
+<td style="text-align:left;">
+Omar Sabir
+</td>
+<td style="text-align:left;">
+50,859 (36%)
+</td>
+<td style="text-align:left;">
+Kahlil Williams
+</td>
+<td style="text-align:left;">
+23,546 (28%)
+</td>
+<td style="text-align:left;">
+Lisa Deeley
+</td>
+<td style="text-align:left;">
+16,955 (28%)
+</td>
+<td style="text-align:left;">
+Omar Sabir
+</td>
+<td style="text-align:left;">
+2,559 (28%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Lisa Deeley
+</td>
+<td style="text-align:left;">
+61,278 (21%)
+</td>
+<td style="text-align:left;">
+Lisa Deeley
+</td>
+<td style="text-align:left;">
+30,766 (22%)
+</td>
+<td style="text-align:left;">
+Jen Devor
+</td>
+<td style="text-align:left;">
+14,853 (18%)
+</td>
+<td style="text-align:left;">
+Omar Sabir
+</td>
+<td style="text-align:left;">
+9,909 (16%)
+</td>
+<td style="text-align:left;">
+Lisa Deeley
+</td>
+<td style="text-align:left;">
+2,465 (27%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Kahlil Williams
+</td>
+<td style="text-align:left;">
+48,884 (17%)
+</td>
+<td style="text-align:left;">
+Kahlil Williams
+</td>
+<td style="text-align:left;">
+17,346 (12%)
+</td>
+<td style="text-align:left;">
+Lisa Deeley
+</td>
+<td style="text-align:left;">
+11,092 (13%)
+</td>
+<td style="text-align:left;">
+Kahlil Williams
+</td>
+<td style="text-align:left;">
+7,193 (12%)
+</td>
+<td style="text-align:left;">
+Marwan Kreidie
+</td>
+<td style="text-align:left;">
+984 (11%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Jen Devor
+</td>
+<td style="text-align:left;">
+23,752 (8%)
+</td>
+<td style="text-align:left;">
+Marwan Kreidie
+</td>
+<td style="text-align:left;">
+10,295 (7%)
+</td>
+<td style="text-align:left;">
+Omar Sabir
+</td>
+<td style="text-align:left;">
+7,976 (10%)
+</td>
+<td style="text-align:left;">
+Jen Devor
+</td>
+<td style="text-align:left;">
+4,905 (8%)
+</td>
+<td style="text-align:left;">
+Kahlil Williams
+</td>
+<td style="text-align:left;">
+799 (9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Marwan Kreidie
+</td>
+<td style="text-align:left;">
+23,190 (8%)
+</td>
+<td style="text-align:left;">
+Annette Thompson
+</td>
+<td style="text-align:left;">
+7,422 (5%)
+</td>
+<td style="text-align:left;">
+Marwan Kreidie
+</td>
+<td style="text-align:left;">
+7,278 (9%)
+</td>
+<td style="text-align:left;">
+Marwan Kreidie
+</td>
+<td style="text-align:left;">
+4,633 (8%)
+</td>
+<td style="text-align:left;">
+Annette Thompson
+</td>
+<td style="text-align:left;">
+480 (5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Annette Thompson
+</td>
+<td style="text-align:left;">
+14,389 (5%)
+</td>
+<td style="text-align:left;">
+Dennis Lee
+</td>
+<td style="text-align:left;">
+6,828 (5%)
+</td>
+<td style="text-align:left;">
+Luigi Borda
+</td>
+<td style="text-align:left;">
+4,210 (5%)
+</td>
+<td style="text-align:left;">
+Luigi Borda
+</td>
+<td style="text-align:left;">
+4,422 (7%)
+</td>
+<td style="text-align:left;">
+Luigi Borda
+</td>
+<td style="text-align:left;">
+390 (4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Dennis Lee
+</td>
+<td style="text-align:left;">
+11,649 (4%)
+</td>
+<td style="text-align:left;">
+Carla Cain
+</td>
+<td style="text-align:left;">
+4,161 (3%)
+</td>
+<td style="text-align:left;">
+Annette Thompson
+</td>
+<td style="text-align:left;">
+3,217 (4%)
+</td>
+<td style="text-align:left;">
+Annette Thompson
+</td>
+<td style="text-align:left;">
+3,270 (5%)
+</td>
+<td style="text-align:left;">
+Jen Devor
+</td>
+<td style="text-align:left;">
+325 (4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Luigi Borda
+</td>
+<td style="text-align:left;">
+11,352 (4%)
+</td>
+<td style="text-align:left;">
+Jen Devor
+</td>
+<td style="text-align:left;">
+3,669 (3%)
+</td>
+<td style="text-align:left;">
+Carla Cain
+</td>
+<td style="text-align:left;">
+3,004 (4%)
+</td>
+<td style="text-align:left;">
+Carla Cain
+</td>
+<td style="text-align:left;">
+2,160 (4%)
+</td>
+<td style="text-align:left;">
+Dennis Lee
+</td>
+<td style="text-align:left;">
+309 (3%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Carla Cain
+</td>
+<td style="text-align:left;">
+9,613 (3%)
+</td>
+<td style="text-align:left;">
+Luigi Borda
+</td>
+<td style="text-align:left;">
+2,330 (2%)
+</td>
+<td style="text-align:left;">
+Dennis Lee
+</td>
+<td style="text-align:left;">
+2,558 (3%)
+</td>
+<td style="text-align:left;">
+Dennis Lee
+</td>
+<td style="text-align:left;">
+1,954 (3%)
+</td>
+<td style="text-align:left;">
+Carla Cain
+</td>
+<td style="text-align:left;">
+288 (3%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Moira Bohannon
+</td>
+<td style="text-align:left;">
+5,054 (2%)
+</td>
+<td style="text-align:left;">
+Lewis Harris Jr
+</td>
+<td style="text-align:left;">
+2,292 (2%)
+</td>
+<td style="text-align:left;">
+Moira Bohannon
+</td>
+<td style="text-align:left;">
+2,247 (3%)
+</td>
+<td style="text-align:left;">
+Moira Bohannon
+</td>
+<td style="text-align:left;">
+1,485 (2%)
+</td>
+<td style="text-align:left;">
+Robin Trent
+</td>
+<td style="text-align:left;">
+136 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Robin Trent
+</td>
+<td style="text-align:left;">
+4,949 (2%)
+</td>
+<td style="text-align:left;">
+Robin Trent
+</td>
+<td style="text-align:left;">
+2,239 (2%)
+</td>
+<td style="text-align:left;">
+Robin Trent
+</td>
+<td style="text-align:left;">
+1,259 (2%)
+</td>
+<td style="text-align:left;">
+Robin Trent
+</td>
+<td style="text-align:left;">
+1,315 (2%)
+</td>
+<td style="text-align:left;">
+Moira Bohannon
+</td>
+<td style="text-align:left;">
+133 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Warren Bloom
+</td>
+<td style="text-align:left;">
+3,808 (1%)
+</td>
+<td style="text-align:left;">
+Warren Bloom
+</td>
+<td style="text-align:left;">
+1,563 (1%)
+</td>
+<td style="text-align:left;">
+Warren Bloom
+</td>
+<td style="text-align:left;">
+1,001 (1%)
+</td>
+<td style="text-align:left;">
+Warren Bloom
+</td>
+<td style="text-align:left;">
+1,124 (2%)
+</td>
+<td style="text-align:left;">
+Warren Bloom
+</td>
+<td style="text-align:left;">
+120 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Lewis Harris Jr
+</td>
+<td style="text-align:left;">
+3,793 (1%)
+</td>
+<td style="text-align:left;">
+Moira Bohannon
+</td>
+<td style="text-align:left;">
+1,189 (1%)
+</td>
+<td style="text-align:left;">
+Lewis Harris Jr
+</td>
+<td style="text-align:left;">
+627 (1%)
+</td>
+<td style="text-align:left;">
+Lewis Harris Jr
+</td>
+<td style="text-align:left;">
+758 (1%)
+</td>
+<td style="text-align:left;">
+Lewis Harris Jr
+</td>
+<td style="text-align:left;">
+116 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+34 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+10 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+4 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+19 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+1 (0%)
+</td>
+</tr>
+</tbody>
+</table>
+<details><summary><code><span style="color: grey;">View code</span></code></summary>
+<pre class="r"><code>get_table_for_office(&quot;Council At Large&quot;)</code></pre>
+</details>
+<table>
+<caption>
+Cluster Results for Council At Large
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="2">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Overall
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Black Voters
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Wealthy Progressives
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+White Moderates
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Hispanic North Philly
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Rank
+</th>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Helen Gym
+</td>
+<td style="text-align:left;">
+108,604 (16%)
+</td>
+<td style="text-align:left;">
+Helen Gym
+</td>
+<td style="text-align:left;">
+47,309 (15%)
+</td>
+<td style="text-align:left;">
+Helen Gym
+</td>
+<td style="text-align:left;">
+37,687 (18%)
+</td>
+<td style="text-align:left;">
+Helen Gym
+</td>
+<td style="text-align:left;">
+21,087 (15%)
+</td>
+<td style="text-align:left;">
+Helen Gym
+</td>
+<td style="text-align:left;">
+2,521 (14%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Allan Domb
+</td>
+<td style="text-align:left;">
+67,193 (10%)
+</td>
+<td style="text-align:left;">
+Isaiah Thomas
+</td>
+<td style="text-align:left;">
+37,294 (12%)
+</td>
+<td style="text-align:left;">
+Justin Diberardinis
+</td>
+<td style="text-align:left;">
+22,895 (11%)
+</td>
+<td style="text-align:left;">
+Allan Domb
+</td>
+<td style="text-align:left;">
+15,403 (11%)
+</td>
+<td style="text-align:left;">
+Allan Domb
+</td>
+<td style="text-align:left;">
+1,747 (9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Isaiah Thomas
+</td>
+<td style="text-align:left;">
+64,045 (10%)
+</td>
+<td style="text-align:left;">
+Allan Domb
+</td>
+<td style="text-align:left;">
+33,664 (11%)
+</td>
+<td style="text-align:left;">
+Erika Almirón
+</td>
+<td style="text-align:left;">
+18,618 (9%)
+</td>
+<td style="text-align:left;">
+Justin Diberardinis
+</td>
+<td style="text-align:left;">
+10,190 (7%)
+</td>
+<td style="text-align:left;">
+Adrián Rivera-Reyes
+</td>
+<td style="text-align:left;">
+1,720 (9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Derek S Green
+</td>
+<td style="text-align:left;">
+61,070 (9%)
+</td>
+<td style="text-align:left;">
+Derek S Green
+</td>
+<td style="text-align:left;">
+33,145 (11%)
+</td>
+<td style="text-align:left;">
+Eryn Santamoor
+</td>
+<td style="text-align:left;">
+17,209 (8%)
+</td>
+<td style="text-align:left;">
+Isaiah Thomas
+</td>
+<td style="text-align:left;">
+10,173 (7%)
+</td>
+<td style="text-align:left;">
+Isaiah Thomas
+</td>
+<td style="text-align:left;">
+1,576 (8%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Katherine Gilmore Richardson
+</td>
+<td style="text-align:left;">
+45,470 (7%)
+</td>
+<td style="text-align:left;">
+Katherine Gilmore Richardson
+</td>
+<td style="text-align:left;">
+24,581 (8%)
+</td>
+<td style="text-align:left;">
+Derek S Green
+</td>
+<td style="text-align:left;">
+17,085 (8%)
+</td>
+<td style="text-align:left;">
+Derek S Green
+</td>
+<td style="text-align:left;">
+9,496 (7%)
+</td>
+<td style="text-align:left;">
+Deja Lynn Alvarez
+</td>
+<td style="text-align:left;">
+1,359 (7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Justin Diberardinis
+</td>
+<td style="text-align:left;">
+42,643 (6%)
+</td>
+<td style="text-align:left;">
+Adrián Rivera-Reyes
+</td>
+<td style="text-align:left;">
+16,323 (5%)
+</td>
+<td style="text-align:left;">
+Allan Domb
+</td>
+<td style="text-align:left;">
+16,379 (8%)
+</td>
+<td style="text-align:left;">
+Katherine Gilmore Richardson
+</td>
+<td style="text-align:left;">
+9,396 (7%)
+</td>
+<td style="text-align:left;">
+Derek S Green
+</td>
+<td style="text-align:left;">
+1,344 (7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Adrián Rivera-Reyes
+</td>
+<td style="text-align:left;">
+35,565 (5%)
+</td>
+<td style="text-align:left;">
+Deja Lynn Alvarez
+</td>
+<td style="text-align:left;">
+12,638 (4%)
+</td>
+<td style="text-align:left;">
+Isaiah Thomas
+</td>
+<td style="text-align:left;">
+15,002 (7%)
+</td>
+<td style="text-align:left;">
+Eryn Santamoor
+</td>
+<td style="text-align:left;">
+8,084 (6%)
+</td>
+<td style="text-align:left;">
+Katherine Gilmore Richardson
+</td>
+<td style="text-align:left;">
+1,232 (7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Eryn Santamoor
+</td>
+<td style="text-align:left;">
+35,026 (5%)
+</td>
+<td style="text-align:left;">
+Sandra Dungee Glenn
+</td>
+<td style="text-align:left;">
+11,153 (4%)
+</td>
+<td style="text-align:left;">
+Adrián Rivera-Reyes
+</td>
+<td style="text-align:left;">
+10,545 (5%)
+</td>
+<td style="text-align:left;">
+Adrián Rivera-Reyes
+</td>
+<td style="text-align:left;">
+6,977 (5%)
+</td>
+<td style="text-align:left;">
+Justin Diberardinis
+</td>
+<td style="text-align:left;">
+899 (5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Erika Almirón
+</td>
+<td style="text-align:left;">
+34,329 (5%)
+</td>
+<td style="text-align:left;">
+Eryn Santamoor
+</td>
+<td style="text-align:left;">
+9,129 (3%)
+</td>
+<td style="text-align:left;">
+Katherine Gilmore Richardson
+</td>
+<td style="text-align:left;">
+10,261 (5%)
+</td>
+<td style="text-align:left;">
+Erika Almirón
+</td>
+<td style="text-align:left;">
+6,254 (5%)
+</td>
+<td style="text-align:left;">
+Erika Almirón
+</td>
+<td style="text-align:left;">
+715 (4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Deja Lynn Alvarez
+</td>
+<td style="text-align:left;">
+26,617 (4%)
+</td>
+<td style="text-align:left;">
+Erika Almirón
+</td>
+<td style="text-align:left;">
+8,742 (3%)
+</td>
+<td style="text-align:left;">
+Deja Lynn Alvarez
+</td>
+<td style="text-align:left;">
+7,190 (3%)
+</td>
+<td style="text-align:left;">
+Deja Lynn Alvarez
+</td>
+<td style="text-align:left;">
+5,430 (4%)
+</td>
+<td style="text-align:left;">
+Eryn Santamoor
+</td>
+<td style="text-align:left;">
+604 (3%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Sandra Dungee Glenn
+</td>
+<td style="text-align:left;">
+18,105 (3%)
+</td>
+<td style="text-align:left;">
+Justin Diberardinis
+</td>
+<td style="text-align:left;">
+8,659 (3%)
+</td>
+<td style="text-align:left;">
+Ethelind Baylor
+</td>
+<td style="text-align:left;">
+5,646 (3%)
+</td>
+<td style="text-align:left;">
+Beth Finn
+</td>
+<td style="text-align:left;">
+4,333 (3%)
+</td>
+<td style="text-align:left;">
+Ogbonna Paul Hagins
+</td>
+<td style="text-align:left;">
+576 (3%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Ethelind Baylor
+</td>
+<td style="text-align:left;">
+14,259 (2%)
+</td>
+<td style="text-align:left;">
+Ogbonna Paul Hagins
+</td>
+<td style="text-align:left;">
+7,260 (2%)
+</td>
+<td style="text-align:left;">
+Beth Finn
+</td>
+<td style="text-align:left;">
+5,281 (3%)
+</td>
+<td style="text-align:left;">
+Joseph A Diorio
+</td>
+<td style="text-align:left;">
+3,186 (2%)
+</td>
+<td style="text-align:left;">
+Fernando Treviño
+</td>
+<td style="text-align:left;">
+530 (3%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Beth Finn
+</td>
+<td style="text-align:left;">
+14,015 (2%)
+</td>
+<td style="text-align:left;">
+Fareed Abdullah
+</td>
+<td style="text-align:left;">
+7,170 (2%)
+</td>
+<td style="text-align:left;">
+Fernando Treviño
+</td>
+<td style="text-align:left;">
+4,519 (2%)
+</td>
+<td style="text-align:left;">
+Ethelind Baylor
+</td>
+<td style="text-align:left;">
+2,808 (2%)
+</td>
+<td style="text-align:left;">
+Beth Finn
+</td>
+<td style="text-align:left;">
+389 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Ogbonna Paul Hagins
+</td>
+<td style="text-align:left;">
+12,570 (2%)
+</td>
+<td style="text-align:left;">
+Asa Khalif
+</td>
+<td style="text-align:left;">
+5,682 (2%)
+</td>
+<td style="text-align:left;">
+Sandra Dungee Glenn
+</td>
+<td style="text-align:left;">
+3,795 (2%)
+</td>
+<td style="text-align:left;">
+Fernando Treviño
+</td>
+<td style="text-align:left;">
+2,799 (2%)
+</td>
+<td style="text-align:left;">
+Sandra Dungee Glenn
+</td>
+<td style="text-align:left;">
+379 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Fernando Treviño
+</td>
+<td style="text-align:left;">
+11,646 (2%)
+</td>
+<td style="text-align:left;">
+Ethelind Baylor
+</td>
+<td style="text-align:left;">
+5,535 (2%)
+</td>
+<td style="text-align:left;">
+Ogbonna Paul Hagins
+</td>
+<td style="text-align:left;">
+2,369 (1%)
+</td>
+<td style="text-align:left;">
+Sandra Dungee Glenn
+</td>
+<td style="text-align:left;">
+2,778 (2%)
+</td>
+<td style="text-align:left;">
+Joseph A Diorio
+</td>
+<td style="text-align:left;">
+358 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Fareed Abdullah
+</td>
+<td style="text-align:left;">
+10,676 (2%)
+</td>
+<td style="text-align:left;">
+Latrice Y Bryant
+</td>
+<td style="text-align:left;">
+5,473 (2%)
+</td>
+<td style="text-align:left;">
+Asa Khalif
+</td>
+<td style="text-align:left;">
+2,303 (1%)
+</td>
+<td style="text-align:left;">
+Ogbonna Paul Hagins
+</td>
+<td style="text-align:left;">
+2,365 (2%)
+</td>
+<td style="text-align:left;">
+Billy Thompson
+</td>
+<td style="text-align:left;">
+306 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Asa Khalif
+</td>
+<td style="text-align:left;">
+9,779 (1%)
+</td>
+<td style="text-align:left;">
+Billy Thompson
+</td>
+<td style="text-align:left;">
+5,300 (2%)
+</td>
+<td style="text-align:left;">
+Fareed Abdullah
+</td>
+<td style="text-align:left;">
+1,821 (1%)
+</td>
+<td style="text-align:left;">
+Billy Thompson
+</td>
+<td style="text-align:left;">
+2,205 (2%)
+</td>
+<td style="text-align:left;">
+Ethelind Baylor
+</td>
+<td style="text-align:left;">
+270 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Billy Thompson
+</td>
+<td style="text-align:left;">
+9,166 (1%)
+</td>
+<td style="text-align:left;">
+Beth Finn
+</td>
+<td style="text-align:left;">
+4,012 (1%)
+</td>
+<td style="text-align:left;">
+Latrice Y Bryant
+</td>
+<td style="text-align:left;">
+1,773 (1%)
+</td>
+<td style="text-align:left;">
+Vinny Black
+</td>
+<td style="text-align:left;">
+1,801 (1%)
+</td>
+<td style="text-align:left;">
+Edwin Santana
+</td>
+<td style="text-align:left;">
+269 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Latrice Y Bryant
+</td>
+<td style="text-align:left;">
+8,966 (1%)
+</td>
+<td style="text-align:left;">
+Fernando Treviño
+</td>
+<td style="text-align:left;">
+3,798 (1%)
+</td>
+<td style="text-align:left;">
+Hena Veit
+</td>
+<td style="text-align:left;">
+1,413 (1%)
+</td>
+<td style="text-align:left;">
+Hena Veit
+</td>
+<td style="text-align:left;">
+1,620 (1%)
+</td>
+<td style="text-align:left;">
+Latrice Y Bryant
+</td>
+<td style="text-align:left;">
+269 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Joseph A Diorio
+</td>
+<td style="text-align:left;">
+7,803 (1%)
+</td>
+<td style="text-align:left;">
+Edwin Santana
+</td>
+<td style="text-align:left;">
+3,061 (1%)
+</td>
+<td style="text-align:left;">
+Billy Thompson
+</td>
+<td style="text-align:left;">
+1,355 (1%)
+</td>
+<td style="text-align:left;">
+Asa Khalif
+</td>
+<td style="text-align:left;">
+1,538 (1%)
+</td>
+<td style="text-align:left;">
+Fareed Abdullah
+</td>
+<td style="text-align:left;">
+258 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Hena Veit
+</td>
+<td style="text-align:left;">
+5,474 (1%)
+</td>
+<td style="text-align:left;">
+Joseph A Diorio
+</td>
+<td style="text-align:left;">
+3,054 (1%)
+</td>
+<td style="text-align:left;">
+Joseph A Diorio
+</td>
+<td style="text-align:left;">
+1,205 (1%)
+</td>
+<td style="text-align:left;">
+Latrice Y Bryant
+</td>
+<td style="text-align:left;">
+1,451 (1%)
+</td>
+<td style="text-align:left;">
+Asa Khalif
+</td>
+<td style="text-align:left;">
+256 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Edwin Santana
+</td>
+<td style="text-align:left;">
+5,272 (1%)
+</td>
+<td style="text-align:left;">
+Wayne Allen
+</td>
+<td style="text-align:left;">
+2,926 (1%)
+</td>
+<td style="text-align:left;">
+Wayne Allen
+</td>
+<td style="text-align:left;">
+958 (0%)
+</td>
+<td style="text-align:left;">
+Fareed Abdullah
+</td>
+<td style="text-align:left;">
+1,427 (1%)
+</td>
+<td style="text-align:left;">
+Hena Veit
+</td>
+<td style="text-align:left;">
+232 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Wayne Allen
+</td>
+<td style="text-align:left;">
+4,941 (1%)
+</td>
+<td style="text-align:left;">
+Hena Veit
+</td>
+<td style="text-align:left;">
+2,209 (1%)
+</td>
+<td style="text-align:left;">
+Edwin Santana
+</td>
+<td style="text-align:left;">
+883 (0%)
+</td>
+<td style="text-align:left;">
+Bobbie Curry
+</td>
+<td style="text-align:left;">
+1,255 (1%)
+</td>
+<td style="text-align:left;">
+Vinny Black
+</td>
+<td style="text-align:left;">
+168 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Vinny Black
+</td>
+<td style="text-align:left;">
+4,516 (1%)
+</td>
+<td style="text-align:left;">
+Mark Ross
+</td>
+<td style="text-align:left;">
+2,137 (1%)
+</td>
+<td style="text-align:left;">
+Mark Ross
+</td>
+<td style="text-align:left;">
+722 (0%)
+</td>
+<td style="text-align:left;">
+Mark Ross
+</td>
+<td style="text-align:left;">
+1,253 (1%)
+</td>
+<td style="text-align:left;">
+Wayne Allen
+</td>
+<td style="text-align:left;">
+158 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Mark Ross
+</td>
+<td style="text-align:left;">
+4,255 (1%)
+</td>
+<td style="text-align:left;">
+Bobbie Curry
+</td>
+<td style="text-align:left;">
+1,923 (1%)
+</td>
+<td style="text-align:left;">
+Vinny Black
+</td>
+<td style="text-align:left;">
+685 (0%)
+</td>
+<td style="text-align:left;">
+Edwin Santana
+</td>
+<td style="text-align:left;">
+1,059 (1%)
+</td>
+<td style="text-align:left;">
+Bobbie Curry
+</td>
+<td style="text-align:left;">
+146 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Bobbie Curry
+</td>
+<td style="text-align:left;">
+3,920 (1%)
+</td>
+<td style="text-align:left;">
+Vinny Black
+</td>
+<td style="text-align:left;">
+1,862 (1%)
+</td>
+<td style="text-align:left;">
+Bobbie Curry
+</td>
+<td style="text-align:left;">
+596 (0%)
+</td>
+<td style="text-align:left;">
+Wayne Allen
+</td>
+<td style="text-align:left;">
+899 (1%)
+</td>
+<td style="text-align:left;">
+Mark Ross
+</td>
+<td style="text-align:left;">
+143 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Devon Cade
+</td>
+<td style="text-align:left;">
+2,854 (0%)
+</td>
+<td style="text-align:left;">
+Wayne Edmund Dorsey
+</td>
+<td style="text-align:left;">
+1,606 (1%)
+</td>
+<td style="text-align:left;">
+Devon Cade
+</td>
+<td style="text-align:left;">
+522 (0%)
+</td>
+<td style="text-align:left;">
+Devon Cade
+</td>
+<td style="text-align:left;">
+683 (0%)
+</td>
+<td style="text-align:left;">
+Devon Cade
+</td>
+<td style="text-align:left;">
+116 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Wayne Edmund Dorsey
+</td>
+<td style="text-align:left;">
+2,780 (0%)
+</td>
+<td style="text-align:left;">
+Devon Cade
+</td>
+<td style="text-align:left;">
+1,533 (0%)
+</td>
+<td style="text-align:left;">
+Wayne Edmund Dorsey
+</td>
+<td style="text-align:left;">
+428 (0%)
+</td>
+<td style="text-align:left;">
+Wayne Edmund Dorsey
+</td>
+<td style="text-align:left;">
+643 (0%)
+</td>
+<td style="text-align:left;">
+Wayne Edmund Dorsey
+</td>
+<td style="text-align:left;">
+103 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+316 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+127 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+101 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+77 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+11 (0%)
+</td>
+</tr>
+</tbody>
+</table>
+<details><summary><code><span style="color: grey;">View code</span></code></summary>
+<pre class="r"><code>get_table_for_office(&quot;Common Pleas&quot;)</code></pre>
+</details>
+<table>
+<caption>
+Cluster Results for Common Pleas
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="2">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Overall
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Black Voters
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Wealthy Progressives
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+White Moderates
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Hispanic North Philly
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Rank
+</th>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+<th style="text-align:left;">
+Candidate
+</th>
+<th style="text-align:left;">
+Votes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Jennifer Schultz
+</td>
+<td style="text-align:left;">
+59,547 (8%)
+</td>
+<td style="text-align:left;">
+Joshua Roberts
+</td>
+<td style="text-align:left;">
+35,820 (11%)
+</td>
+<td style="text-align:left;">
+Tiffany Palmer
+</td>
+<td style="text-align:left;">
+29,310 (13%)
+</td>
+<td style="text-align:left;">
+Jennifer Schultz
+</td>
+<td style="text-align:left;">
+13,789 (9%)
+</td>
+<td style="text-align:left;">
+Joshua Roberts
+</td>
+<td style="text-align:left;">
+2,281 (11%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Anthony Kyriakakis
+</td>
+<td style="text-align:left;">
+58,128 (8%)
+</td>
+<td style="text-align:left;">
+Jennifer Schultz
+</td>
+<td style="text-align:left;">
+25,424 (8%)
+</td>
+<td style="text-align:left;">
+Anthony Kyriakakis
+</td>
+<td style="text-align:left;">
+25,711 (11%)
+</td>
+<td style="text-align:left;">
+Joshua Roberts
+</td>
+<td style="text-align:left;">
+11,317 (7%)
+</td>
+<td style="text-align:left;">
+Jennifer Schultz
+</td>
+<td style="text-align:left;">
+2,171 (10%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Joshua Roberts
+</td>
+<td style="text-align:left;">
+55,702 (8%)
+</td>
+<td style="text-align:left;">
+Carmella Jacquinto
+</td>
+<td style="text-align:left;">
+23,005 (7%)
+</td>
+<td style="text-align:left;">
+Kay Yu
+</td>
+<td style="text-align:left;">
+19,046 (8%)
+</td>
+<td style="text-align:left;">
+Anthony Kyriakakis
+</td>
+<td style="text-align:left;">
+11,187 (7%)
+</td>
+<td style="text-align:left;">
+Carmella Jacquinto
+</td>
+<td style="text-align:left;">
+1,506 (7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Tiffany Palmer
+</td>
+<td style="text-align:left;">
+55,586 (8%)
+</td>
+<td style="text-align:left;">
+Anthony Kyriakakis
+</td>
+<td style="text-align:left;">
+19,840 (6%)
+</td>
+<td style="text-align:left;">
+Jennifer Schultz
+</td>
+<td style="text-align:left;">
+18,163 (8%)
+</td>
+<td style="text-align:left;">
+James C Crumlish
+</td>
+<td style="text-align:left;">
+10,203 (7%)
+</td>
+<td style="text-align:left;">
+Anthony Kyriakakis
+</td>
+<td style="text-align:left;">
+1,390 (7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+James C Crumlish
+</td>
+<td style="text-align:left;">
+39,217 (5%)
+</td>
+<td style="text-align:left;">
+Cateria R McCabe
+</td>
+<td style="text-align:left;">
+19,788 (6%)
+</td>
+<td style="text-align:left;">
+Wendi Barish
+</td>
+<td style="text-align:left;">
+13,562 (6%)
+</td>
+<td style="text-align:left;">
+Tiffany Palmer
+</td>
+<td style="text-align:left;">
+9,392 (6%)
+</td>
+<td style="text-align:left;">
+Craig Levin
+</td>
+<td style="text-align:left;">
+1,127 (5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Carmella Jacquinto
+</td>
+<td style="text-align:left;">
+38,920 (5%)
+</td>
+<td style="text-align:left;">
+James C Crumlish
+</td>
+<td style="text-align:left;">
+16,107 (5%)
+</td>
+<td style="text-align:left;">
+Henry McGregor Sias
+</td>
+<td style="text-align:left;">
+13,202 (6%)
+</td>
+<td style="text-align:left;">
+Wendi Barish
+</td>
+<td style="text-align:left;">
+9,062 (6%)
+</td>
+<td style="text-align:left;">
+Wendi Barish
+</td>
+<td style="text-align:left;">
+1,092 (5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Wendi Barish
+</td>
+<td style="text-align:left;">
+36,998 (5%)
+</td>
+<td style="text-align:left;">
+Tiffany Palmer
+</td>
+<td style="text-align:left;">
+15,927 (5%)
+</td>
+<td style="text-align:left;">
+Chris Hall
+</td>
+<td style="text-align:left;">
+11,956 (5%)
+</td>
+<td style="text-align:left;">
+Carmella Jacquinto
+</td>
+<td style="text-align:left;">
+8,128 (5%)
+</td>
+<td style="text-align:left;">
+James C Crumlish
+</td>
+<td style="text-align:left;">
+1,030 (5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Cateria R McCabe
+</td>
+<td style="text-align:left;">
+36,214 (5%)
+</td>
+<td style="text-align:left;">
+Craig Levin
+</td>
+<td style="text-align:left;">
+15,872 (5%)
+</td>
+<td style="text-align:left;">
+James C Crumlish
+</td>
+<td style="text-align:left;">
+11,877 (5%)
+</td>
+<td style="text-align:left;">
+Beth Grossman
+</td>
+<td style="text-align:left;">
+7,932 (5%)
+</td>
+<td style="text-align:left;">
+Tiffany Palmer
+</td>
+<td style="text-align:left;">
+957 (5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Kay Yu
+</td>
+<td style="text-align:left;">
+34,475 (5%)
+</td>
+<td style="text-align:left;">
+Henry McGregor Sias
+</td>
+<td style="text-align:left;">
+15,413 (5%)
+</td>
+<td style="text-align:left;">
+Nicola Serianni
+</td>
+<td style="text-align:left;">
+10,173 (4%)
+</td>
+<td style="text-align:left;">
+Nicola Serianni
+</td>
+<td style="text-align:left;">
+7,923 (5%)
+</td>
+<td style="text-align:left;">
+Jon Marshall
+</td>
+<td style="text-align:left;">
+948 (5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Henry McGregor Sias
+</td>
+<td style="text-align:left;">
+33,560 (5%)
+</td>
+<td style="text-align:left;">
+Leon Goodman
+</td>
+<td style="text-align:left;">
+14,027 (4%)
+</td>
+<td style="text-align:left;">
+Cateria R McCabe
+</td>
+<td style="text-align:left;">
+9,629 (4%)
+</td>
+<td style="text-align:left;">
+Craig Levin
+</td>
+<td style="text-align:left;">
+6,916 (5%)
+</td>
+<td style="text-align:left;">
+Nicola Serianni
+</td>
+<td style="text-align:left;">
+907 (4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Craig Levin
+</td>
+<td style="text-align:left;">
+30,746 (4%)
+</td>
+<td style="text-align:left;">
+Sherman Toppin
+</td>
+<td style="text-align:left;">
+13,854 (4%)
+</td>
+<td style="text-align:left;">
+Leon Goodman
+</td>
+<td style="text-align:left;">
+7,394 (3%)
+</td>
+<td style="text-align:left;">
+Kay Yu
+</td>
+<td style="text-align:left;">
+5,979 (4%)
+</td>
+<td style="text-align:left;">
+Cateria R McCabe
+</td>
+<td style="text-align:left;">
+877 (4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Nicola Serianni
+</td>
+<td style="text-align:left;">
+28,328 (4%)
+</td>
+<td style="text-align:left;">
+Wendi Barish
+</td>
+<td style="text-align:left;">
+13,282 (4%)
+</td>
+<td style="text-align:left;">
+Beth Grossman
+</td>
+<td style="text-align:left;">
+6,965 (3%)
+</td>
+<td style="text-align:left;">
+Cateria R McCabe
+</td>
+<td style="text-align:left;">
+5,920 (4%)
+</td>
+<td style="text-align:left;">
+Henry McGregor Sias
+</td>
+<td style="text-align:left;">
+841 (4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Leon Goodman
+</td>
+<td style="text-align:left;">
+26,352 (4%)
+</td>
+<td style="text-align:left;">
+Kendra McCrae
+</td>
+<td style="text-align:left;">
+12,585 (4%)
+</td>
+<td style="text-align:left;">
+Craig Levin
+</td>
+<td style="text-align:left;">
+6,831 (3%)
+</td>
+<td style="text-align:left;">
+Chris Hall
+</td>
+<td style="text-align:left;">
+4,552 (3%)
+</td>
+<td style="text-align:left;">
+Beth Grossman
+</td>
+<td style="text-align:left;">
+711 (3%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Chris Hall
+</td>
+<td style="text-align:left;">
+23,891 (3%)
+</td>
+<td style="text-align:left;">
+Terri M Booker
+</td>
+<td style="text-align:left;">
+12,388 (4%)
+</td>
+<td style="text-align:left;">
+Vicki Markovitz
+</td>
+<td style="text-align:left;">
+6,677 (3%)
+</td>
+<td style="text-align:left;">
+Vicki Markovitz
+</td>
+<td style="text-align:left;">
+4,445 (3%)
+</td>
+<td style="text-align:left;">
+Sherman Toppin
+</td>
+<td style="text-align:left;">
+671 (3%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Beth Grossman
+</td>
+<td style="text-align:left;">
+23,876 (3%)
+</td>
+<td style="text-align:left;">
+Jon Marshall
+</td>
+<td style="text-align:left;">
+12,105 (4%)
+</td>
+<td style="text-align:left;">
+Joshua Roberts
+</td>
+<td style="text-align:left;">
+6,284 (3%)
+</td>
+<td style="text-align:left;">
+James F Berardinelli
+</td>
+<td style="text-align:left;">
+4,412 (3%)
+</td>
+<td style="text-align:left;">
+Leon Goodman
+</td>
+<td style="text-align:left;">
+556 (3%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Kendra McCrae
+</td>
+<td style="text-align:left;">
+21,853 (3%)
+</td>
+<td style="text-align:left;">
+Nicola Serianni
+</td>
+<td style="text-align:left;">
+9,325 (3%)
+</td>
+<td style="text-align:left;">
+Carmella Jacquinto
+</td>
+<td style="text-align:left;">
+6,281 (3%)
+</td>
+<td style="text-align:left;">
+Leon Goodman
+</td>
+<td style="text-align:left;">
+4,375 (3%)
+</td>
+<td style="text-align:left;">
+Kendra McCrae
+</td>
+<td style="text-align:left;">
+545 (3%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Sherman Toppin
+</td>
+<td style="text-align:left;">
+19,331 (3%)
+</td>
+<td style="text-align:left;">
+Kay Yu
+</td>
+<td style="text-align:left;">
+8,950 (3%)
+</td>
+<td style="text-align:left;">
+Kendra McCrae
+</td>
+<td style="text-align:left;">
+4,999 (2%)
+</td>
+<td style="text-align:left;">
+Henry McGregor Sias
+</td>
+<td style="text-align:left;">
+4,104 (3%)
+</td>
+<td style="text-align:left;">
+Kay Yu
+</td>
+<td style="text-align:left;">
+500 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Jon Marshall
+</td>
+<td style="text-align:left;">
+19,322 (3%)
+</td>
+<td style="text-align:left;">
+Laurie Dow
+</td>
+<td style="text-align:left;">
+8,464 (3%)
+</td>
+<td style="text-align:left;">
+James F Berardinelli
+</td>
+<td style="text-align:left;">
+4,792 (2%)
+</td>
+<td style="text-align:left;">
+Jon Marshall
+</td>
+<td style="text-align:left;">
+3,823 (3%)
+</td>
+<td style="text-align:left;">
+Terri M Booker
+</td>
+<td style="text-align:left;">
+470 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Terri M Booker
+</td>
+<td style="text-align:left;">
+18,750 (3%)
+</td>
+<td style="text-align:left;">
+Beth Grossman
+</td>
+<td style="text-align:left;">
+8,268 (3%)
+</td>
+<td style="text-align:left;">
+Janine D Momasso
+</td>
+<td style="text-align:left;">
+4,052 (2%)
+</td>
+<td style="text-align:left;">
+Kendra McCrae
+</td>
+<td style="text-align:left;">
+3,724 (2%)
+</td>
+<td style="text-align:left;">
+Vicki Markovitz
+</td>
+<td style="text-align:left;">
+431 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Vicki Markovitz
+</td>
+<td style="text-align:left;">
+16,433 (2%)
+</td>
+<td style="text-align:left;">
+Janine D Momasso
+</td>
+<td style="text-align:left;">
+7,111 (2%)
+</td>
+<td style="text-align:left;">
+Laurie Dow
+</td>
+<td style="text-align:left;">
+3,924 (2%)
+</td>
+<td style="text-align:left;">
+Laurie Dow
+</td>
+<td style="text-align:left;">
+3,233 (2%)
+</td>
+<td style="text-align:left;">
+Janine D Momasso
+</td>
+<td style="text-align:left;">
+402 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Laurie Dow
+</td>
+<td style="text-align:left;">
+16,020 (2%)
+</td>
+<td style="text-align:left;">
+Chris Hall
+</td>
+<td style="text-align:left;">
+7,009 (2%)
+</td>
+<td style="text-align:left;">
+Terri M Booker
+</td>
+<td style="text-align:left;">
+3,061 (1%)
+</td>
+<td style="text-align:left;">
+Terri M Booker
+</td>
+<td style="text-align:left;">
+2,831 (2%)
+</td>
+<td style="text-align:left;">
+Laurie Dow
+</td>
+<td style="text-align:left;">
+399 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Janine D Momasso
+</td>
+<td style="text-align:left;">
+14,384 (2%)
+</td>
+<td style="text-align:left;">
+Vicki Markovitz
+</td>
+<td style="text-align:left;">
+4,880 (1%)
+</td>
+<td style="text-align:left;">
+Jon Marshall
+</td>
+<td style="text-align:left;">
+2,446 (1%)
+</td>
+<td style="text-align:left;">
+Janine D Momasso
+</td>
+<td style="text-align:left;">
+2,819 (2%)
+</td>
+<td style="text-align:left;">
+Chris Hall
+</td>
+<td style="text-align:left;">
+374 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+James F Berardinelli
+</td>
+<td style="text-align:left;">
+13,663 (2%)
+</td>
+<td style="text-align:left;">
+James F Berardinelli
+</td>
+<td style="text-align:left;">
+4,098 (1%)
+</td>
+<td style="text-align:left;">
+Sherman Toppin
+</td>
+<td style="text-align:left;">
+2,355 (1%)
+</td>
+<td style="text-align:left;">
+Sherman Toppin
+</td>
+<td style="text-align:left;">
+2,451 (2%)
+</td>
+<td style="text-align:left;">
+James F Berardinelli
+</td>
+<td style="text-align:left;">
+361 (2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Robert Trimble
+</td>
+<td style="text-align:left;">
+6,305 (1%)
+</td>
+<td style="text-align:left;">
+Robert Trimble
+</td>
+<td style="text-align:left;">
+3,300 (1%)
+</td>
+<td style="text-align:left;">
+Robert Trimble
+</td>
+<td style="text-align:left;">
+1,123 (0%)
+</td>
+<td style="text-align:left;">
+Robert Trimble
+</td>
+<td style="text-align:left;">
+1,649 (1%)
+</td>
+<td style="text-align:left;">
+Robert Trimble
+</td>
+<td style="text-align:left;">
+233 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Gregory Weyer
+</td>
+<td style="text-align:left;">
+3,962 (1%)
+</td>
+<td style="text-align:left;">
+Gregory Weyer
+</td>
+<td style="text-align:left;">
+2,069 (1%)
+</td>
+<td style="text-align:left;">
+Gregory Weyer
+</td>
+<td style="text-align:left;">
+861 (0%)
+</td>
+<td style="text-align:left;">
+Gregory Weyer
+</td>
+<td style="text-align:left;">
+889 (1%)
+</td>
+<td style="text-align:left;">
+Gregory Weyer
+</td>
+<td style="text-align:left;">
+143 (1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;width: 1em; ">
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+108 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+33 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+23 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+27 (0%)
+</td>
+<td style="text-align:left;">
+Write In
+</td>
+<td style="text-align:left;">
+25 (0%)
+</td>
+</tr>
+</tbody>
+</table>
+</div>
