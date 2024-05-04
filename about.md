@@ -18,6 +18,6 @@ Today I manage the ML-based Message Testing team at Blue Rose Research helping D
 
 ​Views expressed here are solely my own.
 
-**Contact me**: [jonathan.tannen@gmail.com](mailto:jonathan.tannen@gmail.com)
+Contact me: [jonathan.tannen@gmail.com](mailto:jonathan.tannen@gmail.com)
 
-[My CV](/assets/files/jtannen_cv_2023_09_24.pdf)
+[See my c.v.](/assets/files/jtannen_cv_2023_09_24.pdf)

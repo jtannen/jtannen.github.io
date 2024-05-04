@@ -14,4 +14,4 @@ For work I manage the ML-based Message Testing team at Blue Rose Research helpin
 
 ​Views expressed here are solely my own.
 
-**Contact me**: [jonathan.tannen@gmail.com](mailto:jonathan.tannen@gmail.com)
+Contact me: [jonathan.tannen@gmail.com](mailto:jonathan.tannen@gmail.com)
