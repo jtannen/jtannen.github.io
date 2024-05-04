@@ -12,6 +12,4 @@ I blog about Philadelphia politics at [sixtysixwards.com](https://www.sixtysixwa
 
 For work I manage the ML-based Message Testing team at Blue Rose Research helping good candidates win elections.
 
-​Views expressed here are solely my own.
-
 Contact me: [jonathan.tannen@gmail.com](mailto:jonathan.tannen@gmail.com)
