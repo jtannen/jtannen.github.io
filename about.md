@@ -17,5 +17,3 @@ I was a founding member of Facebook's Algorithmic Fairness team, eventually mana
 Today I manage the ML-based Message Testing team at Blue Rose Research helping Democrats win elections.
 
 ​Views expressed here are solely my own.
-
-My c.v.: [jtannen_cv_2023_09_24.pdf](/assets/files/jtannen_cv_2023_09_24.pdf)
