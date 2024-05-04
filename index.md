@@ -11,5 +11,3 @@ My Ph.D. research focused on spatial processes of neighborhood change. I spend m
 I blog about Philadelphia politics at [sixtysixwards.com](https://www.sixtysixwards.com).
 
 For work I manage the ML-based Message Testing team at Blue Rose Research helping good candidates win elections.
-
-Contact me: [jonathan.tannen@gmail.com](mailto:jonathan.tannen@gmail.com)
