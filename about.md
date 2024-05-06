@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Hello! I'm an urban spatial demographer and a lifelong Philadelphian.
+Hello! I'm a statistician and ML engineer, and a lifelong Philadelphian.
 
 My Ph.D. research focused on spatial processes of neighborhood change.
 
