@@ -12,8 +12,8 @@ I spend most of my time these days on statistical modeling, bayesian machine lea
 
 I blog about Philadelphia politics at [sixtysixwards.com](sixtysixwards.com).
 
-I was a founding member of Facebook's Algorithmic Fairness team, eventually managing it.
+In 2018, I was a founding researcher on Facebook's Algorithmic Fairness team, and in 2019 began managing its engineering team.
 
-Today I manage the ML-based Message Testing team at Blue Rose Research helping Democrats win elections.
+In 2022, I joined Blue Rose Research to help Democrats win elections. Today, I manage our Heterogeneous Treatment Effects Message Testing team.
 
 ​Views expressed here are solely my own.
