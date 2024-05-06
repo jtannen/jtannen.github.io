@@ -13,9 +13,9 @@ permalink: /research/
 
 ​Alao, R., Bogen, M., Miao, J., Mironov, I., & Tannen, J. (2021) "How Meta is working to assess fairness in relation to race in the U.S. across its products and systems.” [https://ai.facebook.com/research/publications/how-meta-is-working-to-assess-fairness-in-relation-to-race-in-the-us-across-its-products-and-systems/](https://ai.facebook.com/research/publications/how-meta-is-working-to-assess-fairness-in-relation-to-race-in-the-us-across-its-products-and-systems/)  
 
-Kloumann, I. & Tannen, J. (2021). "How we're using Fairness Flow to help build AI that works well for everyone." Facebook AI Blog.
+Kloumann, I. & Tannen, J. (2021). "How we're using Fairness Flow to help build AI that works well for everyone." [Facebook AI Blog](https://ai.meta.com/blog/how-were-using-fairness-flow-to-help-build-ai-that-works-better-for-everyone/).
 
-Bakalar, C. et al (2021). "Fairness on the ground: Applying algorithmic fairness approaches to production systems." Facebook AI Whitepaper. 
+Bakalar, C. et al (2021). "Fairness on the ground: Applying algorithmic fairness approaches to production systems." [Facebook AI Whitepaper](https://ai.meta.com/research/publications/applying-algorithmic-fairness-approaches-to-production-systems/). 
 
 Massey, D.S., & Tannen, J. (2017). "Suburbanization and segregation in the United States: 1970–2010.” Ethnic and Racial Studies, Taylor & Francis
 
