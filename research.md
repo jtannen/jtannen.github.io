@@ -6,7 +6,7 @@ permalink: /research/
 
 **My dissertation**
 
-"Measuring cities' internal demographic change as the movement of emergent boundaries." My dissertation developed a Bayesian clustering algorithm to identify emergent boundaries in cities, and measure the extent to which racial change occured by those boundaries moving. It is available for download [here](http://dataspace.princeton.edu/jspui/handle/88435/dsp01pz50gz56r), and is summarized by [me](http://www.econsultsolutions.com/do-neighborhoods-spread/), and by [City Lab](http://www.citylab.com/housing/2016/08/gentrification-race-boundary-philadelphia/493313/).
+"Measuring cities' internal demographic change as the movement of emergent boundaries." My dissertation developed a Bayesian clustering algorithm to identify emergent boundaries in cities, and measure the extent to which racial change occured by those boundaries moving. It is available for download [here](http://arks.princeton.edu/ark:/88435/dsp01pz50gz56r), and is summarized by [me](http://www.econsultsolutions.com/do-neighborhoods-spread/), and by [City Lab](http://www.citylab.com/housing/2016/08/gentrification-race-boundary-philadelphia/493313/).
 
 
 **Other publications**
