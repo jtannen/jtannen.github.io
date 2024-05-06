@@ -10,4 +10,4 @@ My Ph.D. research focused on spatial processes of neighborhood change. I spend m
 
 I blog about Philadelphia politics at [sixtysixwards.com](https://www.sixtysixwards.com).
 
-At my day job I manage the Heterogeneous Treatment Effect Message Testing team at Blue Rose Research to help Democrats win elections.
+At my day job I manage the Heterogeneous Treatment Effect team at Blue Rose Research to help Democrats win elections.
