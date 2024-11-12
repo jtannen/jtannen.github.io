@@ -14,6 +14,6 @@ I blog about Philadelphia politics at [sixtysixwards.com](sixtysixwards.com).
 
 In 2018, I was a founding researcher on Facebook's Algorithmic Fairness team, and in 2019 created and managed the Algorithmic Fairness Engineering team.
 
-In 2022, I joined Blue Rose Research. Today, I'm a Tech Lead Manager of our Heterogeneous Treatment Effects team.
+In 2022, I joined Blue Rose Research. Today, I tech lead and manage our Heterogeneous Treatment Effects team.
 
 ​Views expressed here are solely my own.
