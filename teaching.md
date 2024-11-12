@@ -22,7 +22,7 @@ Course Assistant, Harvard University, Math 21a: Multivariable Calculus, Falls 20
 
 **Professional Development**
 
-R for Data Science Workshop. Presented to various companies.
+R for Data Science Workshop. Presented to various univerities/non-profits.
 
 **High School**
 
