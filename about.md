@@ -8,7 +8,7 @@ Hello! I'm a statistician and ML engineer, and a lifelong Philadelphian.
 
 My [Ph.D. research](http://arks.princeton.edu/ark:/88435/dsp01pz50gz56r) studied spatial processes of neighborhood change.
 
-These days, I focus on statistical modeling, bayesian machine learning, and GIS. I love building statistically-rigorous modelling frameworks with scalable, high-quality codebases.
+These days, I do statistical modeling, bayesian machine learning, and GIS. I love building statistically-rigorous modelling frameworks with scalable, high-quality codebases.
 
 I blog about Philadelphia politics at [sixtysixwards.com](sixtysixwards.com).
 
