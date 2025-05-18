@@ -6,7 +6,7 @@ permalink: /teaching/
 
 **University**
 
-Lecturer, University of Pennsylvania, Weitzman School of Design, MUSA Capstone Course, Spring 2022.
+Lecturer, University of Pennsylvania, Weitzman School of Design, Master of Urban Spatial Analytics Capstone Course, Spring 2022.
 
 Instructor, University of Pennsylvania, Fels Institute of Government, R for Data Science Workshop Series, Fall 2017.
 
@@ -22,7 +22,7 @@ Course Assistant, Harvard University, Math 21a: Multivariable Calculus, Falls 20
 
 **Professional Development**
 
-R for Data Science Workshop. Presented to various companies.
+R for Data Science Workshop. Presented to various univerities/non-profits.
 
 **High School**
 
